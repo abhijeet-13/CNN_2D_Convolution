@@ -3,18 +3,18 @@
 
 template<class T>
 class tensor {
+    
+public:
     std::vector<size_t> shape_sizes;        // shape sizes
     std::vector<size_t> cum_sizes;          // cumulative sizes
-    size_t _size;
-    int _dims;
-    
+    size_t _size, _dims;
     
 public:
     
-    T * data;
+    T* data;
     
     // Constructor
-    tensor(int dims, ...) {
+    tensor(size_t dims, ...) {
         
         _dims = dims;
         _size = 1;
@@ -46,7 +46,7 @@ public:
     // Getters
     size_t size() { return _size; }
     
-    T get(int idx0, ...) {
+    T get(size_t idx0, ...) {
         size_t idx = idx0 * cum_sizes[0];
         va_list argalist;
         va_start(argalist, idx0);
@@ -56,12 +56,6 @@ public:
         }
         va_end(argalist);
         return data[idx];
-    }
-    
-    void init_seq() {
-        for (size_t val = 1; val <= _size; val++) {
-            data[val - 1] = (T) val;
-        }
     }
     
 };
